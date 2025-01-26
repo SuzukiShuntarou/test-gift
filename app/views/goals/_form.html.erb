@@ -1,0 +1,9 @@
+<%= form_with(model: goal) do |form| %>
+  <%= form.label "目標", style: "display: block" %>
+  <%= form.text_area :content %>
+
+  <%= form.label "進捗率", style: "display: block" %>
+  <%= form.number_field :progress %>
+
+  <%= form.submit %>
+ <% end %>

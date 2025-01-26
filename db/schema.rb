@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_26_015531) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_26_054009) do
+  create_table "goals", force: :cascade do |t|
+    t.text "content"
+    t.integer "progress"
+    t.integer "user_id", null: false
+    t.integer "reward_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reward_id"], name: "index_goals_on_reward_id"
+    t.index ["user_id"], name: "index_goals_on_user_id"
+  end
+
   create_table "groups", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "reward_id", null: false
@@ -41,6 +52,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_26_015531) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "goals", "rewards"
+  add_foreign_key "goals", "users"
   add_foreign_key "groups", "rewards"
   add_foreign_key "groups", "users"
 end
