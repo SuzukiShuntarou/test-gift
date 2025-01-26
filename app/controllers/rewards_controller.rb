@@ -1,5 +1,5 @@
 class RewardsController < ApplicationController
-  before_action :set_reward, only: %i[destroy]
+  before_action :set_reward, only: %i[edit update destroy]
 
   def index
     @rewards = Reward.order(completiondate: :asc)
@@ -20,10 +20,20 @@ class RewardsController < ApplicationController
     @reward = Reward.new(reward_params)
 
     if @reward.save
-      @reward.users << current_user
+      add_user(@reward)
       redirect_to @reward, notice: 'ご褒美の登録に成功！'
     else
       render :new, status: :unprocessable_entity
+    end
+  end
+
+  # 簡易版（編集で追加）
+  def update
+    if @reward.update(reward_params)
+      add_user(@reward)
+      redirect_to reward_path(@reward.id), notice: 'ご褒美の編集に成功！'
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -41,5 +51,9 @@ class RewardsController < ApplicationController
 
   def set_reward
     @reward = Reward.find(params[:id])
+  end
+
+  def add_user(reward)
+    reward.users << current_user
   end
 end
