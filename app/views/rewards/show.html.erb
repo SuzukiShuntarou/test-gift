@@ -9,7 +9,7 @@
 <%= button_to "ご褒美の削除", @reward, method: :delete %>
 
 <br />目標<br />
-<%= link_to "招待", new_user_invitation_path, class: "btn btn-primary" %>
+<%= link_to "招待", new_user_invitation_path(reward_id: @reward.id), class: "btn btn-primary" %>
 <br />
 <% @reward.goals.each do |goal| %>
   ユーザ名：<%= goal.user.name %>

@@ -1,4 +1,5 @@
 <h2><%= t "devise.invitations.edit.header" %></h2>
+<%= @invitation_token %>
 
 <%= form_for(resource, as: resource_name, url: invitation_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
