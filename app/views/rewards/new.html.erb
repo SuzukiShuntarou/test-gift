@@ -1,4 +1,34 @@
 <h1>Rewards#new</h1>
-<%= current_user.name %>
+ログインユーザ：<%= current_user.name %>
 
-<%= render 'form', reward: @reward %>
+<%= form_with(model: @reward) do |form| %>
+
+  <% if @reward.errors.any? %>
+    <div style="color: red">
+    <ul>
+      <% @reward.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+    </div>
+  <% end %>
+
+  <%= form.label :期日, style: "display: block" %>
+  <%= form.date_field :completiondate, value: @reward.completiondate %>
+
+  <%= form.label :場所, style: "display: block" %>
+  <%= form.text_area :location %>
+
+  <%= form.label :ご褒美, style: "display: block" %>
+  <%= form.text_area :content %>
+
+    <%= form.fields_for :goals do |goal_form| %>
+      <%= goal_form.label :content, '目標', style: "display: block" %>
+      <%= goal_form.text_area :content %>
+
+      <%= goal_form.label :progress, '進捗率', style: "display: block" %>
+      <%= goal_form.number_field :progress %>
+    <% end %>
+
+  <%= form.submit %>
+ <% end %>

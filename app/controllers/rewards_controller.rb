@@ -11,13 +11,15 @@ class RewardsController < ApplicationController
 
   def new
     @reward = Reward.new
+    @reward.goals.build
   end
 
   def edit
   end
 
   def create
-    @reward = Reward.new(reward_params)
+    @reward = Reward.new(reward_and_goal_params)
+    @reward.goals.each { |goal| goal.user_id = current_user.id }
 
     if @reward.save
       add_user(@reward)
@@ -49,11 +51,16 @@ class RewardsController < ApplicationController
     params.require(:reward).permit(:completiondate ,:content ,:location)
   end
 
+  def reward_and_goal_params
+    params.require(:reward).permit(:completiondate ,:content ,:location, goals_attributes: %i[content progress])
+  end
+
   def set_reward
     @reward = Reward.find(params[:id])
   end
 
+  # 条件を付けないと無限に増える
   def add_user(reward)
-    reward.users << current_user
+    reward.users << current_user if !reward.users.include?(current_user)
   end
 end
