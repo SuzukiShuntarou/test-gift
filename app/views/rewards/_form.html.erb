@@ -1,0 +1,22 @@
+<%= form_with(model: reward) do |form| %>
+  <% if @reward.errors.any? %>
+    <div style="color: red">
+    <ul>
+      <% @reward.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+    </div>
+  <% end %>
+
+    <%= form.label :completiondate, style: "display: block" %>
+    <%= form.date_field :completiondate, value: reward.completiondate %>
+
+    <%= form.label :location, style: "display: block" %>
+    <%= form.text_area :location %>
+
+    <%= form.label :content, style: "display: block" %>
+    <%= form.text_area :content %>
+
+    <%= form.submit %>
+<% end %>
