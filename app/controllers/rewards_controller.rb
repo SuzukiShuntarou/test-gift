@@ -7,6 +7,7 @@ class RewardsController < ApplicationController
 
   def show
     @reward = Reward.find(params[:id])
+    invite_user(@reward)
   end
 
   def new
@@ -29,10 +30,8 @@ class RewardsController < ApplicationController
     end
   end
 
-  # 簡易版（編集で追加）
   def update
     if @reward.update(reward_params)
-      add_user(@reward)
       redirect_to reward_path(@reward.id), notice: 'ご褒美の編集に成功！'
     else
       render :edit, status: :unprocessable_entity
@@ -62,5 +61,21 @@ class RewardsController < ApplicationController
   # 条件を付けないと無限に増える
   def add_user(reward)
     reward.users << current_user if !reward.users.include?(current_user)
+  end
+
+  
+  # 招待アクション（仮）current_userが自分自身を追加する
+  # showを呼び出したときに追加している。
+  def invite_user(reward)
+    if !reward.users.include?(current_user)
+      reward.users << current_user 
+
+      # 初期目標の作成
+      @reward.goals.create(
+        user_id: current_user.id,
+        content: "",
+        progress: 0
+      )
+    end
   end
 end
