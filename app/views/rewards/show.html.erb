@@ -23,12 +23,3 @@
   <%= link_to "目標の編集", edit_goal_path(goal) %>
   <br />
 <% end %>
-
-<br />
-<% @reward.users.each do |user| %>
-  関連ユーザ名：<%= user.name %>
-  関連ユーザメール：<%= user.email %>
-  <br />
-<% end %>
-
-<%= @reward.invitation_token %>
