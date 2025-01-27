@@ -7,7 +7,7 @@ class RewardsController < ApplicationController
 
   def show
     @reward = Reward.find(params[:id])
-    invite_user(@reward)
+    # invite_user(@reward)
   end
 
   def new

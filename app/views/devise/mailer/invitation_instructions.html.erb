@@ -2,6 +2,10 @@
 
 <p><%= t("devise.mailer.invitation_instructions.someone_invited_you", url: root_url) %></p>
 
+グループID：<%= @resource.invited_reward_id %>に招待されました。
+# ここがうまくいかない
+<%= link_to '招待', accept_invitation_url(@resource, invitation_token: @token, invited_reward_id: @resource.invited_reward_id, email: @resource.email) %>
+
 <% if @resource.invitation_accepted_at %>
   既存ユーザの場合に表示される文面（※忘れずに消す）
 <% else %>

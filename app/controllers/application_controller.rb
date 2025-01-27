@@ -22,12 +22,12 @@ class ApplicationController < ActionController::Base
 
     # 招待用パラメータ
     devise_parameter_sanitizer.permit(:invite) do |u|
-      u.permit(:email)
+      u.permit(:email, :reward_id, :invited_reward_id)
     end
     
     # 招待を承認する際のパラメータ
     devise_parameter_sanitizer.permit(:accept_invitation) do |u|
-      u.permit(:password, :password_confirmation, :invitation_token, :name)
+      u.permit(:password, :password_confirmation, :invitation_token, :name, :invited_reward_id, :email)
     end
   end
 end

@@ -10,20 +10,23 @@ class Users::InvitationsController < Devise::InvitationsController
     # 既存ユーザの処理
     user = User.find_by(email: email)
     if user.present?
-      # これで既存ユーザにも送信できるが毎回パスワードを変える必要がある。
+      user.invited_reward_id = reward_id
       user.invite!
       redirect_to user_path(current_user.id)
     else
       # ここで新規ユーザはDBにはいるので、invitation_tokenが生きている間にもう一度送信があるとuser.present?がtrueとなる
-      user = User.invite!(email: email)
-      invitation_token = user.raw_invitation_token
-      redirect_to user_path(current_user.id, invitation_token: invitation_token)
+      user = User.invite!(email: email, invited_reward_id: reward_id)
+      redirect_to user_path(current_user.id)
     end
   end
 
   def edit
-    # @invitation_token = params[:invitation_token]
-    super
+    email = params[:email]
+    reward = Reward.find(params[:invited_reward_id])
+    user = User.find_by(email: email)
+    redirect_to rewards_path(reward.id)
+    # current_user.invite_reward(reward) # ログインしていないとcurrent_userはnilなのでできない
+    # super
   end
 
   def update
