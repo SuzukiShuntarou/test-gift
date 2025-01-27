@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_26_054009) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_27_011726) do
   create_table "goals", force: :cascade do |t|
     t.text "content"
     t.integer "progress"
@@ -27,6 +27,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_26_054009) do
     t.integer "reward_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "invitation_token"
     t.index ["reward_id"], name: "index_groups_on_reward_id"
     t.index ["user_id"], name: "index_groups_on_user_id"
   end
