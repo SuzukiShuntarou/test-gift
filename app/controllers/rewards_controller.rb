@@ -1,13 +1,15 @@
 class RewardsController < ApplicationController
-  before_action :set_reward, only: %i[edit update destroy]
+  before_action :set_reward, only: %i[show edit update destroy]
 
   def index
     @rewards = Reward.order(completiondate: :asc)
   end
 
   def show
-    @reward = Reward.find(params[:id])
-    invite_user if params[:invitation_token]
+    # URLに invitation_token がない場合はDB検索しないようにする
+    if params[:invitation_token] && @reward == Reward.find_by(invitation_token: params[:invitation_token])
+      @reward.invite(current_user) 
+    end
   end
 
   def new
@@ -58,19 +60,4 @@ class RewardsController < ApplicationController
   def set_reward
     @reward = Reward.find(params[:id])
   end
-
-  def invite_user
-    reward = Reward.find_by(invitation_token: params[:invitation_token])
-
-    unless reward.users.include?(current_user)
-      reward.users << current_user
-      # 初期目標の作成
-      reward.goals.create(
-        user_id: current_user.id,
-        content: "",
-        progress: 0
-      )
-    end
-  end
-
 end
