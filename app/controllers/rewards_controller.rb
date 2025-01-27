@@ -7,7 +7,7 @@ class RewardsController < ApplicationController
 
   def show
     @reward = Reward.find(params[:id])
-    # invite_user(@reward)
+    invite_user if params[:invitation_token]
   end
 
   def new
@@ -59,24 +59,18 @@ class RewardsController < ApplicationController
     @reward = Reward.find(params[:id])
   end
 
-  # 条件を付けないと無限に増える
-  # def add_user(reward)
-  #   reward.users << current_user if !reward.users.include?(current_user)
-  # end
+  def invite_user
+    reward = Reward.find_by(invitation_token: params[:invitation_token])
 
-  
-  # 招待アクション（仮）current_userが自分自身を追加する
-  # showを呼び出したときに追加している。
-  def invite_user(reward)
-    if !reward.users.include?(current_user)
-      reward.users << current_user 
-
+    unless reward.users.include?(current_user)
+      reward.users << current_user
       # 初期目標の作成
-      @reward.goals.create(
+      reward.goals.create(
         user_id: current_user.id,
         content: "",
         progress: 0
       )
     end
   end
+
 end
