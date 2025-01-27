@@ -7,7 +7,7 @@ class RewardsController < ApplicationController
 
   def show
     @reward = Reward.find(params[:id])
-    invite_user(@reward)
+    # invite_user(@reward)
   end
 
   def new
@@ -20,10 +20,11 @@ class RewardsController < ApplicationController
 
   def create
     @reward = Reward.new(reward_and_goal_params)
+    @reward.invitation_token ||= SecureRandom.urlsafe_base64 
     @reward.goals.each { |goal| goal.user_id = current_user.id }
 
     if @reward.save
-      add_user(@reward)
+      @reward.users << current_user
       redirect_to @reward, notice: 'ご褒美の登録に成功！'
     else
       render :new, status: :unprocessable_entity
@@ -59,9 +60,9 @@ class RewardsController < ApplicationController
   end
 
   # 条件を付けないと無限に増える
-  def add_user(reward)
-    reward.users << current_user if !reward.users.include?(current_user)
-  end
+  # def add_user(reward)
+  #   reward.users << current_user if !reward.users.include?(current_user)
+  # end
 
   
   # 招待アクション（仮）current_userが自分自身を追加する
