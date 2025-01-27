@@ -1,9 +1,16 @@
-<%= form_with(model: goal) do |form| %>
-  <%= form.label "目標", style: "display: block" %>
-  <%= form.text_area :content %>
-
-  <%= form.label "進捗率", style: "display: block" %>
-  <%= form.number_field :progress %>
-
-  <%= form.submit %>
- <% end %>
+<%= turbo_frame_tag goal do %>
+  <%= bootstrap_form_with(model: goal, data: { action: "turbo:submit-end->modal#close" }) do |form| %>
+    <div class="mb-3">
+      <%= form.text_area :content %>
+    </div>
+    <div class="mb-3">
+      <%= form.label "進捗率" %>％
+    </div>
+    <div class="mb-3">
+      <%= form.number_field :progress %>
+    </div>
+    <div class="mb-3">
+      <%= form.submit "保存", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+<% end %>
