@@ -8,6 +8,10 @@
 <%= link_to "ご褒美の編集", edit_reward_path(@reward) %>
 <%= button_to "ご褒美の削除", @reward, method: :delete %>
 
+<br />
+<%= link_to "招待用URL", reward_path(@reward.id, invitation_token: @reward.invitation_token) %>
+<br />
+
 <br />目標<br />
 <% @reward.goals.each do |goal| %>
   ユーザ名：<%= goal.user.name %>
