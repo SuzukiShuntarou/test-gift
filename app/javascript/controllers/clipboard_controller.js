@@ -7,21 +7,15 @@ export default class extends Controller {
   };
 
   connect() {
-    this.originalContent = this.element.innerHTML;
+    this.originalText = this.element.innerHTML;
   }
 
   copy() {
-    console.log(this.element);
-    navigator.clipboard.writeText(this.contentValue).then(
-      () => {
-        this.element.textContent = "コピーしました！";
-        setTimeout(() => {
-          this.element.innerHTML = this.originalContent;
-        }, 2000);
-      },
-      () => {
-        alert("クリップボードにコピー出来ませんでした。");
-      }
-    );
+    navigator.clipboard.writeText(this.contentValue).then(() => {
+      this.element.textContent = "コピーしました！";
+      setTimeout(() => {
+        this.element.innerHTML = this.originalText;
+      }, 2000);
+    });
   }
 }
