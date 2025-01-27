@@ -11,10 +11,21 @@
         </div>
       <% end %>
 
-      <%= form.date_field :completiondate, value: reward.completiondate %>
+      <div class="mb-3">
+        <%= form.label :completiondate, "終了日" %>
+        <%= form.date_field :completiondate, value: reward.completiondate %>
+      </div>
+      <div class="mb-3">
+      <%= form.label :location, "場所" %>
       <%= form.text_area :location %>
-      <%= form.text_area :content %>
-      <%= form.submit %>
+      </div>
+      <div class="mb-3">
+        <%= form.label :content, "内容" %>
+        <%= form.text_area :content %>
+      </div>
+      <div class="mb-3">
+        <%= form.submit "保存", class: "btn btn-primary" %>
+      </div>
     <% end %>
   <% end %>
 <% end %>
