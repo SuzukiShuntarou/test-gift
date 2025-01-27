@@ -1,22 +1,20 @@
-<%= form_with(model: reward) do |form| %>
-  <% if @reward.errors.any? %>
-    <div style="color: red">
-    <ul>
-      <% @reward.errors.each do |error| %>
-        <li><%= error.full_message %></li>
+<%= turbo_frame_tag reward do %>
+  <%= bootstrap_form_with(model: reward, data: { action: "turbo:submit-end->modal#close" }) do |form| %>
+    <%= form_with(model: reward) do |form| %>
+      <% if @reward.errors.any? %>
+        <div style="color: red">
+        <ul>
+          <% reward.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+        </div>
       <% end %>
-    </ul>
-    </div>
+
+      <%= form.date_field :completiondate, value: reward.completiondate %>
+      <%= form.text_area :location %>
+      <%= form.text_area :content %>
+      <%= form.submit %>
+    <% end %>
   <% end %>
-
-    <%= form.label :completiondate, style: "display: block" %>
-    <%= form.date_field :completiondate, value: reward.completiondate %>
-
-    <%= form.label :location, style: "display: block" %>
-    <%= form.text_area :location %>
-
-    <%= form.label :content, style: "display: block" %>
-    <%= form.text_area :content %>
-
-    <%= form.submit %>
 <% end %>

@@ -2,11 +2,9 @@
 
 ログインユーザ：<%= current_user.name %>
 <br />ご褒美<br />
-<%= @reward.completiondate %>に　
-<%= @reward.location %>で　
-<%= @reward.content %>する
-<%= link_to "ご褒美の編集", edit_reward_path(@reward) %>
-<%= button_to "ご褒美の削除", @reward, method: :delete %>
+<div id='reward'>
+  <%= render @reward %>
+</div>
 
 <br />
 <%= button_tag '招待用URLをコピー', 
