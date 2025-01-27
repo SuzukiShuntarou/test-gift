@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_26_054009) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_27_014141) do
   create_table "goals", force: :cascade do |t|
     t.text "content"
     t.integer "progress"
@@ -37,6 +37,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_26_054009) do
     t.text "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "invitation_token"
   end
 
   create_table "users", force: :cascade do |t|

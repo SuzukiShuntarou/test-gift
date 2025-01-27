@@ -1,13 +1,15 @@
 class RewardsController < ApplicationController
-  before_action :set_reward, only: %i[edit update destroy]
+  before_action :set_reward, only: %i[show edit update destroy]
 
   def index
     @rewards = Reward.order(completiondate: :asc)
   end
 
   def show
-    @reward = Reward.find(params[:id])
-    invite_user(@reward)
+    # URLに invitation_token がない場合はDB検索しないようにする
+    if params[:invitation_token] && @reward == Reward.find_by(invitation_token: params[:invitation_token])
+      @reward.invite(current_user) 
+    end
   end
 
   def new
@@ -20,10 +22,11 @@ class RewardsController < ApplicationController
 
   def create
     @reward = Reward.new(reward_and_goal_params)
+    @reward.invitation_token ||= SecureRandom.urlsafe_base64 
     @reward.goals.each { |goal| goal.user_id = current_user.id }
 
     if @reward.save
-      add_user(@reward)
+      @reward.users << current_user
       redirect_to @reward, notice: 'ご褒美の登録に成功！'
     else
       render :new, status: :unprocessable_entity
@@ -56,26 +59,5 @@ class RewardsController < ApplicationController
 
   def set_reward
     @reward = Reward.find(params[:id])
-  end
-
-  # 条件を付けないと無限に増える
-  def add_user(reward)
-    reward.users << current_user if !reward.users.include?(current_user)
-  end
-
-  
-  # 招待アクション（仮）current_userが自分自身を追加する
-  # showを呼び出したときに追加している。
-  def invite_user(reward)
-    if !reward.users.include?(current_user)
-      reward.users << current_user 
-
-      # 初期目標の作成
-      @reward.goals.create(
-        user_id: current_user.id,
-        content: "",
-        progress: 0
-      )
-    end
   end
 end

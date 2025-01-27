@@ -8,18 +8,18 @@
 <%= link_to "ご褒美の編集", edit_reward_path(@reward) %>
 <%= button_to "ご褒美の削除", @reward, method: :delete %>
 
+<br />
+<%= button_tag '招待用URLをコピー', 
+      data: { controller: "clipboard",
+      action: "click->clipboard#copy",
+      clipboard_content_value: reward_url(@reward.id, invitation_token: @reward.invitation_token) } %>
+<br />
+
 <br />目標<br />
 <% @reward.goals.each do |goal| %>
   ユーザ名：<%= goal.user.name %>
   目標：<%= goal.content %>
   進捗率：<%= goal.progress %>%
   <%= link_to "目標の編集", edit_goal_path(goal) %>
-  <br />
-<% end %>
-
-<br />
-<% @reward.users.each do |user| %>
-  関連ユーザ名：<%= user.name %>
-  関連ユーザメール：<%= user.email %>
   <br />
 <% end %>
