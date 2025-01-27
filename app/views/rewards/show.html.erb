@@ -9,7 +9,10 @@
 <%= button_to "ご褒美の削除", @reward, method: :delete %>
 
 <br />
-<%= link_to "招待用URL", reward_path(@reward.id, invitation_token: @reward.invitation_token) %>
+<%= button_tag '招待用URLをコピー', 
+      data: { controller: "clipboard",
+      action: "click->clipboard#copy",
+      clipboard_content_value: reward_url(@reward.id, invitation_token: @reward.invitation_token) } %>
 <br />
 
 <br />目標<br />
