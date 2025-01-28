@@ -1,0 +1,8 @@
+<%= turbo_frame_tag cheering do %>
+  <%= button_to cheerings_path(id: cheering.id), class: "btn btn-link" do %>
+    <span style="display: inline-flex;">
+      <%= image_tag("cheering-icon.png", size: '25x25') %>
+      <%= cheering.cheering_count %>
+    </span>
+  <% end %>
+<% end %>

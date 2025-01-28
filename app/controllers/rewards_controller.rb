@@ -29,7 +29,9 @@ class RewardsController < ApplicationController
     @reward.goals.each do |goal|
       goal.user_id = current_user.id
       goal.build_favorite
+      goal.build_cheering
     end
+
     if @reward.save
       @reward.users << current_user
       redirect_to @reward, notice: 'ご褒美の登録に成功！'
