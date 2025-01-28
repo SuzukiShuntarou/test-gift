@@ -17,5 +17,6 @@
 <% @reward.goals.each do |goal| %>
   <div id="<%= dom_id(goal) %>">
     <%= render 'goals/goal', goal: goal %>
+    いいね：<%= goal.favorite.good_count %>
   </div>
 <% end %>
