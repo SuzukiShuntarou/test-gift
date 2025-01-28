@@ -2,7 +2,10 @@ class RewardsController < ApplicationController
   before_action :set_reward, only: %i[show edit update destroy]
 
   def index
-    @rewards = Reward.order(completiondate: :asc)
+    # @rewards = Reward.order(completiondate: :asc)
+    @rewards = Reward.joins(:users)
+                 .where(users: { id: current_user.id })
+                 .order(completiondate: :asc)
   end
 
   def show
