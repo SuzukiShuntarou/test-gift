@@ -1,0 +1,5 @@
+<%= turbo_frame_tag favorite do %>
+  <%= button_to favorites_path(id: favorite.id), class: "btn btn-link" do %>
+    <span class="fa fa-thumbs-up like-btn"><%= favorite.good_count %></span>
+  <% end %>
+<% end %>

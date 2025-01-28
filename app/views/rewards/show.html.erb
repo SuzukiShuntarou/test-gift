@@ -18,7 +18,7 @@
   <div id="<%= dom_id(goal) %>">
     <%= render 'goals/goal', goal: goal %>
   </div>
-  <%= button_to favorites_path(id: goal.favorite.id), class: "btn btn-link" do %>
-    <span class="fa fa-thumbs-up like-btn"><%= goal.favorite.good_count %></span>
-  <% end %>
+  <div id="<%= dom_id(goal.favorite) %>">
+    <%= render 'favorites/favorite', favorite: goal.favorite %>
+  </div>
 <% end %>
