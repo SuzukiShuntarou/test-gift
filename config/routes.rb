@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show]
   resources :rewards
   resources :goals
+  resources :favorites, only: [:create]
+  resources :cheerings, only: [:create]
 
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener" 

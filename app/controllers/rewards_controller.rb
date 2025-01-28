@@ -26,7 +26,11 @@ class RewardsController < ApplicationController
   def create
     @reward = Reward.new(reward_and_goal_params)
     @reward.invitation_token ||= SecureRandom.urlsafe_base64 
-    @reward.goals.each { |goal| goal.user_id = current_user.id }
+    @reward.goals.each do |goal|
+      goal.user_id = current_user.id
+      goal.build_favorite
+      goal.build_cheering
+    end
 
     if @reward.save
       @reward.users << current_user

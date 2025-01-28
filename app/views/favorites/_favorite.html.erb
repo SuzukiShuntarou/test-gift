@@ -1,0 +1,8 @@
+<%= turbo_frame_tag favorite do %>
+  <%= button_to favorites_path(id: favorite.id), class: "btn btn-link" do %>
+    <span style="display: inline-flex;">
+      <%= image_tag("good-icon.png", size: '20x20') %>
+      <%= favorite.good_count %>
+    </span>
+  <% end %>
+<% end %>

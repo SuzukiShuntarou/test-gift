@@ -10,7 +10,9 @@ class Reward < ApplicationRecord
       self.users << current_user
 
       # 初期目標の作成
-      self.goals.create(user_id: current_user.id, content: "", progress: 0)
+      goal = self.goals.create(user_id: current_user.id, content: "", progress: 0)
+      goal.build_favorite.save
+      goal.build_cheering.save
     end
   end
 
