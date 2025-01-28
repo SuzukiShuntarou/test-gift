@@ -4,15 +4,16 @@
 ログインユーザ：<%= current_user.name %>
 <br />
 <% @rewards.each do |reward| %>
-  <%= reward.completiondate %>　
-  <%= link_to "#{reward.location}で#{reward.content}する", reward_path(reward.id) %>　
-  <% reward.goals.each do |goal| %>
-    <% if goal.user.id == current_user.id %>
-      進捗率：<%= goal.progress %>％
+  <% if reward.complete? %>
+    <%= reward.completiondate %>　
+    <%= link_to "#{reward.location}で#{reward.content}する", reward_path(reward.id) %>　
+    <% reward.goals.each do |goal| %>
+      <% if goal.user.id == current_user.id %>
+        進捗率：<%= goal.progress %>％
+      <% end %>
     <% end %>
+    <br />
   <% end %>
-  <br />
 <% end %>
-
 <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
 <%= link_to '新規作成', new_reward_path %>

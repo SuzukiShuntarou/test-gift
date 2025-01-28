@@ -13,4 +13,8 @@ class Reward < ApplicationRecord
       self.goals.create(user_id: current_user.id, content: "", progress: 0)
     end
   end
+
+  def complete?
+    self.completiondate.before? Date.current
+  end
 end
