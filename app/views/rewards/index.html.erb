@@ -4,7 +4,7 @@
 ログインユーザ：<%= current_user.name %>
 <br />
 <% @rewards.each do |reward| %>
-  <% if reward.complete? %>
+  <% unless reward.complete? %>
     <%= reward.completiondate %>　
     <%= link_to "#{reward.location}で#{reward.content}する", reward_path(reward.id) %>　
     <% reward.goals.each do |goal| %>
