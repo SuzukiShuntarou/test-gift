@@ -2,11 +2,9 @@
 
 ログインユーザ：<%= current_user.name %>
 <br />ご褒美<br />
-<%= @reward.completiondate %>に　
-<%= @reward.location %>で　
-<%= @reward.content %>する
-<%= link_to "ご褒美の編集", edit_reward_path(@reward) %>
-<%= button_to "ご褒美の削除", @reward, method: :delete %>
+<div id='reward'>
+  <%= render @reward %>
+</div>
 
 <br />
 <%= button_tag '招待用URLをコピー', 
@@ -17,9 +15,7 @@
 
 <br />目標<br />
 <% @reward.goals.each do |goal| %>
-  ユーザ名：<%= goal.user.name %>
-  目標：<%= goal.content %>
-  進捗率：<%= goal.progress %>%
-  <%= link_to "目標の編集", edit_goal_path(goal) %>
-  <br />
+  <div id="<%= dom_id(goal) %>">
+    <%= render 'goals/goal', goal: goal %>
+  </div>
 <% end %>

@@ -1,0 +1,8 @@
+<%= turbo_frame_tag reward do %>
+  <p style="color: green"><%= notice %></p>
+  <%= reward.completiondate %>に
+  <%= reward.location %>で
+  <%= reward.content %>する
+  <%= link_to "編集", edit_reward_path(reward), class: "btn btn-sm btn-outline-primary me-2", data: { turbo_frame: "modal"} %>
+<% end %>
+<%= button_to "削除", reward, method: :delete, class: "btn btn-sm btn-outline-danger", data: { turbo_confirm: "削除しますか？" } %>

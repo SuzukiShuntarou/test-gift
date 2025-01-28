@@ -60,3 +60,5 @@ group :test do
 end
 
 gem 'devise'
+
+gem "bootstrap_form", "~> 5.4"
