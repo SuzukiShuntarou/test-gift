@@ -3,17 +3,22 @@
 <br />
 ログインユーザ：<%= current_user.name %>
 <br />
+
+<div class="btn-group">
+  <%= link_to "実施中", root_path(display: 'inprogress'), class: "#{current_page_button_primary('inprogress')} #{current_page_button_or_not('inprogress')}" %>
+  <%= link_to "完了", root_path(display: 'completed'), class: "#{current_page_button_primary('completed')} #{current_page_button_or_not('completed')}" %>
+</div>
+
+<br />
 <% @rewards.each do |reward| %>
-  <% unless reward.complete? %>
-    <%= reward.completiondate %>　
-    <%= link_to "#{reward.location}で#{reward.content}する", reward_path(reward.id) %>　
-    <% reward.goals.each do |goal| %>
-      <% if goal.user.id == current_user.id %>
-        進捗率：<%= goal.progress %>％
-      <% end %>
+  <%= reward.completiondate %>　
+  <%= link_to "#{reward.location}で#{reward.content}する", reward_path(reward.id) %>　
+  <% reward.goals.each do |goal| %>
+    <% if goal.user.id == current_user.id %>
+      進捗率：<%= goal.progress %>％
     <% end %>
-    <br />
   <% end %>
+  <br />
 <% end %>
 <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
 <%= link_to '新規作成', new_reward_path %>
