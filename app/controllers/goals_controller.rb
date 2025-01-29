@@ -1,15 +1,6 @@
 class GoalsController < ApplicationController
   before_action :set_goal, only: %i[edit update]
 
-  def index
-  end
-
-  def show
-  end
-
-  def new
-  end
-
   def edit
   end
 
