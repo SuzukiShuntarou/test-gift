@@ -1,16 +1,14 @@
 class RewardsController < ApplicationController
-  before_action :set_reward, only: %i[show edit update destroy]
+  before_action :set_reward, only: %i[edit update destroy]
 
   def index
-    # @rewards = Reward.order(completiondate: :asc)
-    @rewards = Reward.joins(:users)
-                 .where(users: { id: current_user.id })
-                 .order(completiondate: :asc)
+    @rewards = Reward.select_button_contents(params[:display], current_user)
   end
 
   def show
-    # URLに invitation_token がない場合はDB検索しないようにする
-    if params[:invitation_token] && @reward == Reward.find_by(invitation_token: params[:invitation_token])
+    @reward = Reward.includes(goals: [:user, :favorite, :cheering]).find(params[:id])
+    @goals = @reward.goals
+    if params[:invitation_token] && @reward.invitation_token == params[:invitation_token]
       @reward.invite(current_user) 
     end
   end
