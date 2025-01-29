@@ -14,7 +14,7 @@
 <br />
 
 <br />目標<br />
-<% @reward.goals.each do |goal| %>
+<% @goals.each do |goal| %>
   <div id="<%= dom_id(goal) %>">
     <%= render 'goals/goal', goal: goal %>
   </div>
