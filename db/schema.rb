@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_28_135753) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_29_133455) do
   create_table "cheerings", force: :cascade do |t|
     t.integer "goal_id", null: false
     t.integer "cheering_count", default: 0
@@ -29,7 +29,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_28_135753) do
 
   create_table "goals", force: :cascade do |t|
     t.text "content"
-    t.integer "progress"
+    t.integer "progress", default: 0
     t.integer "user_id", null: false
     t.integer "reward_id", null: false
     t.datetime "created_at", null: false
