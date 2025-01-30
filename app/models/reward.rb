@@ -16,8 +16,10 @@ class Reward < ApplicationRecord
     end
   end
 
-  def self.select_button_contents(display, current_user)
-    rewards = Reward.includes(:users, goals: [:user, :favorite, :cheering]).where(users: { id: current_user.id }).order(completiondate: :asc)
+  def self.search_completed_or_in_progress(display, current_user)
+    rewards = Reward.includes(groups: :user, goals: [:user, :favorite, :cheering])
+                    .where(groups: { user_id: current_user.id })
+                    .order(completiondate: :asc)
     display == 'completed' ? rewards.where('completiondate < ?', Date.current).reverse : rewards.where('completiondate >= ?', Date.current)
   end
 end 
