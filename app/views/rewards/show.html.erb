@@ -6,12 +6,14 @@
   <%= render @reward %>
 </div>
 
-<br />
-<%= button_tag '招待用URLをコピー', 
-      data: { controller: "clipboard",
-      action: "click->clipboard#copy",
-      clipboard_content_value: reward_url(@reward.id, invitation_token: @reward.invitation_token) } %>
-<br />
+<% if @reward.in_progress? %>
+  <br />
+  <%= button_tag '招待用URLをコピー', 
+        data: { controller: "clipboard",
+        action: "click->clipboard#copy",
+        clipboard_content_value: reward_url(@reward.id, invitation_token: @reward.invitation_token) } %>
+  <br />
+<% end %>
 
 <br />目標<br />
 <% @goals.each do |goal| %>
