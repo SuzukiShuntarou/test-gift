@@ -24,6 +24,7 @@ class Reward < ApplicationRecord
   end
 
   def in_progress?
-    self.completiondate.after? Date.current
+    # 登録した完了日当日までは実施中判定
+    self.completiondate.after? Date.current.yesterday
   end
 end 
