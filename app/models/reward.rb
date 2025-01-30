@@ -22,4 +22,8 @@ class Reward < ApplicationRecord
                     .order(completiondate: :asc)
     display == 'completed' ? rewards.where('completiondate < ?', Date.current).reverse : rewards.where('completiondate >= ?', Date.current)
   end
+
+  def in_progress?
+    self.completiondate.after? Date.current
+  end
 end 
