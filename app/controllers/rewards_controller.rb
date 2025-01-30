@@ -2,7 +2,7 @@ class RewardsController < ApplicationController
   before_action :set_reward, only: %i[edit update destroy]
 
   def index
-    @rewards = Reward.select_button_contents(params[:display], current_user)
+    @rewards = Reward.search_completed_or_in_progress(params[:display], current_user)
   end
 
   def show

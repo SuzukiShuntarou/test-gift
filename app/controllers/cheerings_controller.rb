@@ -1,5 +1,5 @@
 class CheeringsController < ApplicationController
-  def create
+  def update
     @cheering = Cheering.find(params[:id])
     @cheering.increment!(:cheering_count)
   end

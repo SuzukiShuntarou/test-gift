@@ -1,5 +1,5 @@
 class FavoritesController < ApplicationController
-  def create
+  def update
     @favorite = Favorite.find(params[:id])
     @favorite.increment!(:good_count)
   end
