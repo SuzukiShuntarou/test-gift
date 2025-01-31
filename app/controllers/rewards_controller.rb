@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RewardsController < ApplicationController
   before_action :set_reward, only: %i[edit update destroy]
 

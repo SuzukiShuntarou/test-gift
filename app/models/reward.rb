@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Reward < ApplicationRecord
   has_many :groups, dependent: :destroy
   has_many :users, through: :groups
@@ -6,7 +8,7 @@ class Reward < ApplicationRecord
   accepts_nested_attributes_for :goals, allow_destroy: true
 
   def invite(current_user)
-    return unless in_progress? && !users.include?(current_user)
+    return unless in_progress? && users.exclude?(current_user)
 
     users << current_user
 
@@ -21,7 +23,7 @@ class Reward < ApplicationRecord
     rewards = Reward.includes(groups: :user, goals: %i[user favorite cheering])
                     .where(groups: { user_id: current_user.id })
                     .order(completiondate: :asc)
-    display == 'completed' ? rewards.where('completiondate < ?', Date.current).reverse : rewards.where('completiondate >= ?', Date.current)
+    display == 'completed' ? rewards.where(completiondate: ...Date.current).reverse : rewards.where(completiondate: Date.current..)
   end
 
   def in_progress?
