@@ -3,7 +3,7 @@
   ユーザ名：<%= goal.user.name %>
   目標：<%= goal.content %>
   進捗率：<%= goal.progress %>%
-  <% if goal.user == current_user %>
+  <% if goal.user == current_user && goal.reward.in_progress? %>
     <%= link_to "編集", edit_goal_path(goal), class: "btn btn-sm btn-outline-primary me-2", data: { turbo_frame: "modal"} %>
   <% end %>
 <% end %>

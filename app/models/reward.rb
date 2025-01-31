@@ -6,7 +6,7 @@ class Reward < ApplicationRecord
   accepts_nested_attributes_for :goals, allow_destroy: true
 
   def invite(current_user)
-    unless self.users.include?(current_user)
+    if self.in_progress? && !self.users.include?(current_user)
       self.users << current_user
 
       # 初期目標の作成
@@ -21,5 +21,10 @@ class Reward < ApplicationRecord
                     .where(groups: { user_id: current_user.id })
                     .order(completiondate: :asc)
     display == 'completed' ? rewards.where('completiondate < ?', Date.current).reverse : rewards.where('completiondate >= ?', Date.current)
+  end
+
+  def in_progress?
+    # 登録した完了日当日までは実施中判定
+    self.completiondate.after? Date.current.yesterday
   end
 end 
