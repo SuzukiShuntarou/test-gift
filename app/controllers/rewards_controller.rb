@@ -8,12 +8,17 @@ class RewardsController < ApplicationController
   def show
     # @reward = Reward.includes(goals: [:user, :favorite, :cheering]).find(params[:id])
     # @reward = current_user.groups.find_by!(reward_id: params[:id]).reward
-    groups = Group.includes(reward: [goals: [:user, :favorite, :cheering]]).where(user_id: current_user.id)
-    @reward = groups.find_by!(reward_id: params[:id]).reward
-    @goals = @reward.goals
-    if params[:invitation_token] && @reward.invitation_token == params[:invitation_token]
-      @reward.invite(current_user) 
+
+    reward_id = params[:id]
+    invitation_token = params[:invitation_token]
+    if invitation_token
+      @reward = Reward.includes(goals: [:user, :favorite, :cheering]).find_by!(id: reward_id, invitation_token:)
+      @reward.invite(current_user)
+    else
+      groups = Group.includes(reward: [goals: [:user, :favorite, :cheering]]).where(user_id: current_user.id)
+      @reward = groups.find_by!(reward_id:).reward
     end
+    @goals = @reward.goals
   end
 
   def new
