@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
     stored_location_for(resource) || rewards_path(resource)
   end
 
-  def after_sign_out_path_for(resource)
+  def after_sign_out_path_for(_resource)
     root_path
   end
 
