@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ButtonHelper
   def current_page_button_or_not(target_name)
     current_page_button(target_name) ? 'active' : ''

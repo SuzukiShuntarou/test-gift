@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RewardsController < ApplicationController
   before_action :set_reward, only: %i[edit update destroy]
 
@@ -12,10 +14,10 @@ class RewardsController < ApplicationController
     reward_id = params[:id]
     invitation_token = params[:invitation_token]
     if invitation_token
-      @reward = Reward.includes(goals: [:user, :favorite, :cheering]).find_by!(id: reward_id, invitation_token:)
+      @reward = Reward.includes(goals: %i[user favorite cheering]).find_by!(id: reward_id, invitation_token:)
       @reward.invite(current_user)
     else
-      groups = Group.includes(reward: [goals: [:user, :favorite, :cheering]]).where(user_id: current_user.id)
+      groups = Group.includes(reward: [goals: %i[user favorite cheering]]).where(user_id: current_user.id)
       @reward = groups.find_by!(reward_id:).reward
     end
     @goals = @reward.goals
@@ -26,8 +28,7 @@ class RewardsController < ApplicationController
     @reward.goals.build
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @reward = Reward.new(reward_and_goal_params)
