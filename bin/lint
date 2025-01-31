@@ -1,5 +1,5 @@
 #!/bin/bash
 
 set -e
-bundle exec rubocop -a
+bundle exec rubocop
 npm run -s lint
