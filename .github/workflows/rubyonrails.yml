@@ -67,11 +67,6 @@ jobs:
           npm install
           bundle install
 
-      - name: rubocop
-        run: bundle exec rubocop
-
-      - name: eslint
-        run:  npx eslint ./app/javascript
-
-      - name: prettier
-        run: npx prettier --check ./app/javascript
+      - name: Run Lint
+        run: |
+          bin/lint 
