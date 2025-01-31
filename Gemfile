@@ -67,3 +67,4 @@ end
 gem 'devise'
 
 gem "bootstrap_form", "~> 5.4"
+gem 'pg'
