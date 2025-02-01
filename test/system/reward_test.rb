@@ -19,7 +19,7 @@ class RewardsTest < ApplicationSystemTestCase
     assert_text '実施中'
     assert_text '叙々苑で食事する'
 
-    click_link '完了'
+    click_on '完了'
     assert_text '草津で温泉旅行する'
   end
 end

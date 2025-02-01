@@ -57,6 +57,7 @@ group :development do
   gem 'rubocop-minitest', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
+  gem 'rubocop-capybara', require: false
   gem "web-console"
 end
 
