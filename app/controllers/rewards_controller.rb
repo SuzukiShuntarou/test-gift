@@ -32,7 +32,7 @@ class RewardsController < ApplicationController
 
   def create
     @reward = Reward.new(reward_and_goal_params)
-    @reward.invitation_token ||= SecureRandom.urlsafe_base64 
+    @reward.invitation_token ||= SecureRandom.urlsafe_base64
     @reward.goals.each do |goal|
       goal.user_id = current_user.id
       goal.build_favorite
@@ -64,11 +64,11 @@ class RewardsController < ApplicationController
   private
 
   def reward_params
-    params.require(:reward).permit(:completiondate ,:content ,:location)
+    params.require(:reward).permit(:completiondate, :content, :location)
   end
 
   def reward_and_goal_params
-    params.require(:reward).permit(:completiondate ,:content ,:location, goals_attributes: %i[content progress])
+    params.require(:reward).permit(:completiondate, :content, :location, goals_attributes: %i[content progress])
   end
 
   def set_reward
