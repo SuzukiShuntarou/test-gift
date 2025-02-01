@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 class GoalsController < ApplicationController
   before_action :set_goal, only: %i[edit update]
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @goal.reward.in_progress? && @goal.update(goal_params)

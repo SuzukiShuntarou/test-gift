@@ -33,3 +33,6 @@ AllCops:
 
 Minitest/EmptyLineBeforeAssertionMethods:
   Enabled: false
+
+Rails/I18nLocaleTexts:
+  Enabled: false
