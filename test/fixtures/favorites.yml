@@ -1,0 +1,3 @@
+alice_liking_in_progress:
+  goal: alice_goal_in_progress
+  good_count: 10
