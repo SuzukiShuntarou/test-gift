@@ -9,7 +9,7 @@ class RewardTest < ActiveSupport::TestCase
   end
 
   test 'should be in progress' do
-    assert @reward_in_progress.in_progress?
+    assert_predicate @reward_in_progress, :in_progress?
   end
 
   test 'should not be in progress' do
