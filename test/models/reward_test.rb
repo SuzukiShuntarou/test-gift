@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class RewardTest < ActiveSupport::TestCase
-  def setup
+  setup do
     @reward_in_progress = rewards(:alice_reward_in_progress)
     @reward_completed = rewards(:alice_reward_completed)
   end
