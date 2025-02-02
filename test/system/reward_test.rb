@@ -116,4 +116,16 @@ class RewardsTest < ApplicationSystemTestCase
     assert_text '目標：ランニングする'
     assert_text '進捗率：99%'
   end
+
+  test '進行中を削除する' do
+    visit_reward_path(@reward)
+    within('#reward') do
+      assert_selector 'button', text: '削除'
+      click_link_or_button '削除'
+      page.accept_alert
+    end
+
+    assert_current_path rewards_path
+    assert_text 'ご褒美の削除に成功！'
+  end
 end
