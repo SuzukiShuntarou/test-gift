@@ -17,6 +17,7 @@ class RewardsTest < ApplicationSystemTestCase
     visit rewards_path
     assert_text 'Rewards#index'
     click_link_or_button '実施中'
+    assert_selector 'a', text: "#{reward.location}で#{reward.content}する"
     click_link_or_button "#{reward.location}で#{reward.content}する"
     assert_text 'Rewards#show'
   end
@@ -128,5 +129,28 @@ class RewardsTest < ApplicationSystemTestCase
     assert_current_path rewards_path
     assert_text 'ご褒美の削除に成功！'
     assert_no_text "#{@reward.location}で#{@reward.content}する"
+  end
+
+  test 'should not display edit, delete, and invite buttons for completed reward' do
+    reward = rewards(:alice_reward_completed)
+    goal = goals(:alice_goal_completed)
+
+    visit rewards_path
+    assert_text 'Rewards#index'
+    click_link_or_button '完了'
+    assert_selector 'a', text: "#{reward.location}で#{reward.content}する"
+    click_link_or_button "#{reward.location}で#{reward.content}する"
+    assert_text 'Rewards#show'
+
+    within('#reward') do
+      assert_no_selector 'a', text: '編集'
+      assert_no_selector 'button', text: '削除'
+    end
+
+    within("div##{dom_id(goal)}") do
+      assert_no_selector 'a', text: '編集'
+    end
+
+    assert_no_selector 'button', text: '招待用URLをコピー'
   end
 end
