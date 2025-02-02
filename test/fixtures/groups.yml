@@ -5,3 +5,11 @@ alice_only_in_progress:
 alice_only_completed:
   user: alice
   reward: alice_reward_completed
+
+alice_and_bob_in_progress_1:
+  user: alice
+  reward: alice_bob_reward_in_progress
+
+alice_and_bob_in_progress_2:
+  user: bob
+  reward: alice_bob_reward_in_progress

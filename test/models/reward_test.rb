@@ -6,6 +6,7 @@ class RewardTest < ActiveSupport::TestCase
   setup do
     @current_user = users(:alice)
     @other_user = users(:bob)
+    @another_user = users(:charlie)
     @reward_in_progress = rewards(:alice_reward_in_progress)
     @reward_completed = rewards(:alice_reward_completed)
   end
@@ -18,13 +19,13 @@ class RewardTest < ActiveSupport::TestCase
     assert_not @reward_completed.in_progress?
   end
 
-  test 'should only search in progress records' do
+  test 'should only search in progress rewards' do
     rewards = Reward.search_completed_or_in_progress('inprogress', @current_user)
     assert_includes rewards, @reward_in_progress
     assert_not_includes rewards, @reward_completed
   end
 
-  test 'should only search completed records' do
+  test 'should only search completed rewards' do
     rewards = Reward.search_completed_or_in_progress('completed', @current_user)
     assert_not_includes rewards, @reward_in_progress
     assert_includes rewards, @reward_completed
@@ -38,5 +39,22 @@ class RewardTest < ActiveSupport::TestCase
     rewards_completed = Reward.search_completed_or_in_progress('completed', @other_user)
     assert_not_includes rewards_completed, @reward_in_progress
     assert_not_includes rewards_completed, @reward_completed
+  end
+
+  test 'should seach rewards for users belonging to group' do
+    reward_with_alice_and_bob = rewards(:alice_bob_reward_in_progress)
+
+    rewards_current_user = Reward.search_completed_or_in_progress('inprogress', @current_user)
+    assert_includes rewards_current_user, reward_with_alice_and_bob
+
+    rewards_other_user = Reward.search_completed_or_in_progress('inprogress', @other_user)
+    assert_includes rewards_other_user, reward_with_alice_and_bob
+  end
+
+  test 'should not seach rewards for users not belonging to group' do
+    reward_with_alice_and_bob = rewards(:alice_bob_reward_in_progress)
+
+    rewards_another_user = Reward.search_completed_or_in_progress('inprogress', @another_user)
+    assert_not_includes rewards_another_user, reward_with_alice_and_bob
   end
 end
