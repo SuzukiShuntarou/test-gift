@@ -131,6 +131,24 @@ class RewardsTest < ApplicationSystemTestCase
     assert_no_text "#{@reward.location}で#{@reward.content}する"
   end
 
+  test 'should increase count when liking and cheering button clicked' do
+    liking = favorites(:alice_liking_in_progress)
+    cheering = cheerings(:alice_cheering_in_progress)
+
+    visit_reward_in_progress_path(@reward)
+
+    within("div##{dom_id(liking)}") do
+      assert_text 10
+      click_link_or_button
+      assert_text 11
+    end
+    within("div##{dom_id(cheering)}") do
+      assert_text 0
+      click_link_or_button
+      assert_text 1
+    end
+  end
+
   test 'should not display edit, delete, and invite buttons for completed reward' do
     reward = rewards(:alice_reward_completed)
     goal = goals(:alice_goal_completed)
