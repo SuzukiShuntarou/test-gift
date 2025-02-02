@@ -117,7 +117,7 @@ class RewardsTest < ApplicationSystemTestCase
     assert_text '進捗率：99%'
   end
 
-  test '進行中を削除する' do
+  test 'should delete reward and goal in progress' do
     visit_reward_path(@reward)
     within('#reward') do
       assert_selector 'button', text: '削除'
@@ -127,5 +127,6 @@ class RewardsTest < ApplicationSystemTestCase
 
     assert_current_path rewards_path
     assert_text 'ご褒美の削除に成功！'
+    assert_no_text "#{@reward.location}で#{@reward.content}する"
   end
 end
