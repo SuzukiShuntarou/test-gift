@@ -6,7 +6,6 @@ class RewardTest < ActiveSupport::TestCase
   setup do
     @current_user = users(:alice)
     @other_user = users(:bob)
-    @another_user = users(:charlie)
     @reward_in_progress = rewards(:alice_reward_in_progress)
     @reward_completed = rewards(:alice_reward_completed)
   end
@@ -52,9 +51,10 @@ class RewardTest < ActiveSupport::TestCase
   end
 
   test 'should not seach rewards for users not belonging to group' do
+    another_user = users(:charlie)
     reward_with_alice_and_bob = rewards(:alice_bob_reward_in_progress)
 
-    rewards_another_user = Reward.search_completed_or_in_progress('inprogress', @another_user)
+    rewards_another_user = Reward.search_completed_or_in_progress('inprogress', another_user)
     assert_not_includes rewards_another_user, reward_with_alice_and_bob
   end
 
