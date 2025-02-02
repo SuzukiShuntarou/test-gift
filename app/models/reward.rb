@@ -21,7 +21,7 @@ class Reward < ApplicationRecord
   def self.search_completed_or_in_progress(display, current_user)
     rewards = Reward.includes(groups: :user, goals: %i[user favorite cheering])
                     .where(groups: { user_id: current_user.id })
-                    .order(completiondate: :asc)
+                    .order(completiondate: :asc, id: :asc)
     display == 'completed' ? rewards.where(completiondate: ...Date.current).reverse : rewards.where(completiondate: Date.current..)
   end
 
