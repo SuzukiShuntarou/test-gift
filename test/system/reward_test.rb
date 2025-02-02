@@ -4,6 +4,7 @@ require 'application_system_test_case'
 
 class RewardsTest < ApplicationSystemTestCase
   setup do
+    @reward = rewards(:alice_reward_in_progress)
     visit new_user_session_path
     assert_text 'Log in'
     fill_in 'Email', with: 'alice@example.com'
@@ -32,17 +33,16 @@ class RewardsTest < ApplicationSystemTestCase
   end
 
   test 'visiting rewards show in progress' do
-    reward = rewards(:alice_reward_in_progress)
     goal = goals(:alice_goal_in_progress)
     liking = favorites(:alice_liking_in_progress)
     cheering = cheerings(:alice_cheering_in_progress)
 
-    visit_reward_path(reward)
+    visit_reward_path(@reward)
 
     within('#reward') do
-      assert_text "#{reward.completiondate}に"
-      assert_text "#{reward.location}で"
-      assert_text "#{reward.content}する"
+      assert_text "#{@reward.completiondate}に"
+      assert_text "#{@reward.location}で"
+      assert_text "#{@reward.content}する"
     end
 
     within("div##{dom_id(goal)}") do
@@ -81,10 +81,9 @@ class RewardsTest < ApplicationSystemTestCase
   end
 
   test 'should edit reward in progress' do
-    reward = rewards(:alice_reward_in_progress)
     goals(:alice_goal_in_progress)
 
-    visit_reward_path(reward)
+    visit_reward_path(@reward)
 
     within('#reward') do
       assert_selector 'a', text: '編集'
@@ -101,10 +100,9 @@ class RewardsTest < ApplicationSystemTestCase
   end
 
   test 'should edit goal in progress' do
-    reward = rewards(:alice_reward_in_progress)
     goal = goals(:alice_goal_in_progress)
 
-    visit_reward_path(reward)
+    visit_reward_path(@reward)
 
     within("div##{dom_id(goal)}") do
       assert_selector 'a', text: '編集'
