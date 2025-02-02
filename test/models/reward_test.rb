@@ -57,4 +57,19 @@ class RewardTest < ActiveSupport::TestCase
     rewards_another_user = Reward.search_completed_or_in_progress('inprogress', @another_user)
     assert_not_includes rewards_another_user, reward_with_alice_and_bob
   end
+
+  test 'should be added to in progress group when invited' do
+    groups_before_invite = @reward_in_progress.groups
+    assert_not_includes groups_before_invite.map(&:user_id), @other_user.id
+
+    @reward_in_progress.invite(@other_user)
+    groups_after_invite = @reward_in_progress.groups
+    assert_includes groups_after_invite.map(&:user_id), @other_user.id
+  end
+
+  test 'should not be added to completed group when invited' do
+    @reward_completed.invite(@other_user)
+    groups_completed = @reward_completed.groups
+    assert_not_includes groups_completed.map(&:user_id), @other_user.id
+  end
 end
