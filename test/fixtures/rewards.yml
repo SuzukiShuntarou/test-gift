@@ -1,0 +1,14 @@
+alice_reward_in_progress:
+  completiondate: <%= Date.current %>
+  location: 叙々苑
+  content: 食事
+
+alice_reward_completed:
+  completiondate: <%= Date.current.yesterday %>
+  location: 草津
+  content: 温泉旅行
+
+alice_bob_reward_in_progress:
+  completiondate: <%= Date.current %>
+  location: 北海道
+  content: 旅行

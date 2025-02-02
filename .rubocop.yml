@@ -10,10 +10,15 @@ require:
   - rubocop-rails
   - rubocop-performance
   - rubocop-minitest
+  - rubocop-capybara
 
 Metrics/BlockLength:
   Exclude:
     - test/**/*
+
+Minitest/MultipleAssertions:
+  Exclude:
+    - "test/**/*"
 
 AllCops:
   TargetRubyVersion: 3.4
