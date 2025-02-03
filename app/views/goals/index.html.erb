@@ -15,6 +15,7 @@
   <% goal_content = goal.content.empty? ? '目標が未設定です！' : goal.content %>
   <%= goal.reward.completiondate %>
   <%= link_to goal_content, reward_path(goal.reward.id) %>
+  <%= goal.progress %>%
   <br />
 <% end %>
 <%= button_to 'ログアウト', destroy_user_session_path, method: :delete %>
