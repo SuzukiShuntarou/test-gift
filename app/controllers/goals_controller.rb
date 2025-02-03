@@ -3,6 +3,10 @@
 class GoalsController < ApplicationController
   before_action :set_goal, only: %i[edit update]
 
+  def index
+    @goals = Goal.search_completed_or_in_progress(params[:display], current_user)
+  end
+
   def edit; end
 
   def update

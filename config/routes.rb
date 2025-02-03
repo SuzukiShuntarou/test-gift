@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
-  root to: 'rewards#index'
+  root to: redirect('/goals')
   resources :rewards
-  resources :goals, only: [:edit, :update] do
+  resources :goals, only: [:index, :edit, :update] do
     resources :favorites, only: [:update]
   end
   resources :cheerings, only: [:update]
