@@ -7,10 +7,10 @@ class RewardsController < ApplicationController
     reward_id = params[:id]
     invitation_token = params[:invitation_token]
     if invitation_token
-      @reward = Reward.includes(goals: %i[user favorites cheerings]).find_by!(id: reward_id, invitation_token:)
+      @reward = Reward.includes(goals: :user).find_by!(id: reward_id, invitation_token:)
       @reward.invite(current_user)
     else
-      groups = Group.includes(reward: [goals: %i[user favorites cheerings]]).where(user_id: current_user.id)
+      groups = Group.includes(reward: { goals: :user }).where(user_id: current_user.id)
       @reward = groups.find_by!(reward_id:).reward
     end
     @goals = @reward.goals

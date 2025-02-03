@@ -24,6 +24,6 @@ class GoalsController < ApplicationController
   end
 
   def set_goal
-    @goal = current_user.goals.includes(:reward).find(params[:id])
+    @goal = current_user.goals.find(params[:id])
   end
 end
