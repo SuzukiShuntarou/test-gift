@@ -51,7 +51,7 @@ class RewardsController < ApplicationController
   def destroy
     @reward.destroy if @reward.in_progress?
 
-    redirect_to rewards_path, notice: 'ご褒美の削除に成功！'
+    redirect_to goals_path, notice: 'ご褒美の削除に成功！'
   end
 
   private
