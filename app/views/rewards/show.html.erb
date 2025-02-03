@@ -24,6 +24,6 @@
     <%= render 'favorites/favorite', goal: goal, favorite: goal.favorite %>
   </div>
   <div id="<%= dom_id(goal.cheering) %>">
-    <%= render 'cheerings/cheering', cheering: goal.cheering %>
+    <%= render 'cheerings/cheering', goal: goal, cheering: goal.cheering %>
   </div>
 <% end %>

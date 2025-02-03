@@ -4,9 +4,8 @@ Rails.application.routes.draw do
   resources :rewards
   resources :goals, only: [:index, :edit, :update] do
     resources :favorites, only: [:update]
+    resources :cheerings, only: [:update]
   end
-  resources :cheerings, only: [:update]
-
 
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener" 

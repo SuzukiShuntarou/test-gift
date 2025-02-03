@@ -2,8 +2,8 @@
 
 class CheeringsController < ApplicationController
   def update
-    @cheering = Cheering.find(params[:id])
-    # @cheering.increment!(:cheering_count)
+    @goal = Goal.find(params[:goal_id])
+    @cheering = @goal.cheering
     @cheering.cheering_count += 1
     @cheering.save! # バリデーションを含めて保存
   end

@@ -1,1 +1,3 @@
-<%= turbo_stream.update dom_id(@cheering), @cheering %>
+<%= turbo_stream.update dom_id(@cheering) do %>
+  <%= render 'cheerings/cheering', cheering: @cheering, goal: @goal %>
+<% end %>
