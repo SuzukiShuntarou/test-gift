@@ -4,6 +4,7 @@ require 'application_system_test_case'
 
 class RewardsTest < ApplicationSystemTestCase
   setup do
+    @reward = rewards(:alice_reward_in_progress)
     visit new_user_session_path
     assert_text 'Log in'
     fill_in 'Email', with: 'alice@example.com'
@@ -12,10 +13,11 @@ class RewardsTest < ApplicationSystemTestCase
     assert_text 'Signed in successfully.'
   end
 
-  def visit_reward_path(reward)
+  def visit_reward_in_progress_path(reward)
     visit rewards_path
     assert_text 'Rewards#index'
     click_link_or_button '実施中'
+    assert_selector 'a', text: "#{reward.location}で#{reward.content}する"
     click_link_or_button "#{reward.location}で#{reward.content}する"
     assert_text 'Rewards#show'
   end
@@ -32,17 +34,16 @@ class RewardsTest < ApplicationSystemTestCase
   end
 
   test 'visiting rewards show in progress' do
-    reward = rewards(:alice_reward_in_progress)
     goal = goals(:alice_goal_in_progress)
     liking = favorites(:alice_liking_in_progress)
     cheering = cheerings(:alice_cheering_in_progress)
 
-    visit_reward_path(reward)
+    visit_reward_in_progress_path(@reward)
 
     within('#reward') do
-      assert_text "#{reward.completiondate}に"
-      assert_text "#{reward.location}で"
-      assert_text "#{reward.content}する"
+      assert_text "#{@reward.completiondate}に"
+      assert_text "#{@reward.location}で"
+      assert_text "#{@reward.content}する"
     end
 
     within("div##{dom_id(goal)}") do
@@ -81,10 +82,9 @@ class RewardsTest < ApplicationSystemTestCase
   end
 
   test 'should edit reward in progress' do
-    reward = rewards(:alice_reward_in_progress)
     goals(:alice_goal_in_progress)
 
-    visit_reward_path(reward)
+    visit_reward_in_progress_path(@reward)
 
     within('#reward') do
       assert_selector 'a', text: '編集'
@@ -101,10 +101,9 @@ class RewardsTest < ApplicationSystemTestCase
   end
 
   test 'should edit goal in progress' do
-    reward = rewards(:alice_reward_in_progress)
     goal = goals(:alice_goal_in_progress)
 
-    visit_reward_path(reward)
+    visit_reward_in_progress_path(@reward)
 
     within("div##{dom_id(goal)}") do
       assert_selector 'a', text: '編集'
@@ -117,5 +116,59 @@ class RewardsTest < ApplicationSystemTestCase
     end
     assert_text '目標：ランニングする'
     assert_text '進捗率：99%'
+  end
+
+  test 'should delete reward and goal in progress' do
+    visit_reward_in_progress_path(@reward)
+    within('#reward') do
+      assert_selector 'button', text: '削除'
+      click_link_or_button '削除'
+      page.accept_alert
+    end
+
+    assert_current_path rewards_path
+    assert_text 'ご褒美の削除に成功！'
+    assert_no_text "#{@reward.location}で#{@reward.content}する"
+  end
+
+  test 'should increase count when liking and cheering button clicked' do
+    liking = favorites(:alice_liking_in_progress)
+    cheering = cheerings(:alice_cheering_in_progress)
+
+    visit_reward_in_progress_path(@reward)
+
+    within("div##{dom_id(liking)}") do
+      assert_text 10
+      click_link_or_button
+      assert_text 11
+    end
+    within("div##{dom_id(cheering)}") do
+      assert_text 0
+      click_link_or_button
+      assert_text 1
+    end
+  end
+
+  test 'should not display edit, delete, and invite buttons for completed reward' do
+    reward = rewards(:alice_reward_completed)
+    goal = goals(:alice_goal_completed)
+
+    visit rewards_path
+    assert_text 'Rewards#index'
+    click_link_or_button '完了'
+    assert_selector 'a', text: "#{reward.location}で#{reward.content}する"
+    click_link_or_button "#{reward.location}で#{reward.content}する"
+    assert_text 'Rewards#show'
+
+    within('#reward') do
+      assert_no_selector 'a', text: '編集'
+      assert_no_selector 'button', text: '削除'
+    end
+
+    within("div##{dom_id(goal)}") do
+      assert_no_selector 'a', text: '編集'
+    end
+
+    assert_no_selector 'button', text: '招待用URLをコピー'
   end
 end
