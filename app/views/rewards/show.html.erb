@@ -17,13 +17,16 @@
 
 <br />目標<br />
 <% @goals.each do |goal| %>
+  <% favorite = goal.favorites.includes(:user).find_by(user_id: current_user.id) %>
+  <% cheering = goal.cheerings.includes(:user).find_by(user_id: current_user.id) %>
   <div id="<%= dom_id(goal) %>">
     <%= render 'goals/goal', goal: goal %>
   </div>
-  <div id="<%= dom_id(goal.favorite) %>">
-    <%= render 'favorites/favorite', goal: goal, favorite: goal.favorite %>
+  <div id="<%= dom_id(favorite) %>">
+    <%= render 'favorites/favorite', goal: goal, favorite: favorite %>
   </div>
-  <div id="<%= dom_id(goal.cheering) %>">
-    <%= render 'cheerings/cheering', goal: goal, cheering: goal.cheering %>
+  <div id="<%= dom_id(cheering) %>">
+    <%= render 'cheerings/cheering', goal: goal, cheering: cheering %>
   </div>
 <% end %>
+
