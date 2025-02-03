@@ -3,14 +3,7 @@
 class RewardsController < ApplicationController
   before_action :set_reward, only: %i[edit update destroy]
 
-  def index
-    @rewards = Reward.search_completed_or_in_progress(params[:display], current_user)
-  end
-
   def show
-    # @reward = Reward.includes(goals: [:user, :favorite, :cheering]).find(params[:id])
-    # @reward = current_user.groups.find_by!(reward_id: params[:id]).reward
-
     reward_id = params[:id]
     invitation_token = params[:invitation_token]
     if invitation_token

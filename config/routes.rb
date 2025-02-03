@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: redirect('/goals')
-  resources :rewards
+  resources :rewards, only: [:show, :new, :create, :edit, :update, :destroy]
   resources :goals, only: [:index, :edit, :update] do
     resources :favorites, only: [:update]
     resources :cheerings, only: [:update]

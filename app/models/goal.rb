@@ -6,7 +6,7 @@ class Goal < ApplicationRecord
   has_one :favorite, dependent: :destroy
   has_one :cheering, dependent: :destroy
 
-  def self.search_completed_or_in_progress(display, current_user)
+  def self.search_rewards_completed_or_in_progress(display, current_user)
     goals = Goal.includes(:reward)
                 .where(user_id: current_user.id)
                 .order('rewards.completiondate ASC, rewards.id ASC')
