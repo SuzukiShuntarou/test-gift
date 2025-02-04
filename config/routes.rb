@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # devise_for :users, path: '', path_names: { 
+  #   edit: 'user/edit'
+  # }
   devise_for :users
   root to: redirect('/goals')
   resources :rewards, only: [:show, :new, :create, :edit, :update, :destroy]

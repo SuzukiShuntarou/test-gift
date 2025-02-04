@@ -1,7 +1,7 @@
 <%= turbo_frame_tag cheering do %>
   <%= button_to goal_cheering_path(id: cheering.id, goal_id: goal.id), class: "btn btn-link", method: :patch do %>
     <span style="display: inline-flex;">
-      <%= image_tag("cheering-icon.png", onmouseover: "this.title='#{show_user_count(goal)}'", size: '25x25') %>
+      <%= image_tag("cheering-icon.png", onmouseover: "this.title='#{show_cheering_count(goal)}'", size: '25x25') %>
       <%= goal.cheerings.sum(:cheering_count) %>
     </span>
   <% end %>

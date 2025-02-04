@@ -10,7 +10,7 @@ class RewardsController < ApplicationController
       @reward = Reward.includes(goals: :user).find_by!(id: reward_id, invitation_token:)
       @reward.invite(current_user)
     else
-      groups = Group.includes(reward: { goals: :user }).where(user_id: current_user.id)
+      groups = Group.includes(reward: { goals: :user }).where(user: current_user)
       @reward = groups.find_by!(reward_id:).reward
     end
     @goals = @reward.goals
@@ -28,8 +28,8 @@ class RewardsController < ApplicationController
     @reward.invitation_token ||= SecureRandom.urlsafe_base64
     @reward.goals.each do |goal|
       goal.user_id = current_user.id
-      goal.favorites.build(user_id: current_user.id)
-      goal.cheerings.build(user_id: current_user.id)
+      goal.favorites.build(user: current_user)
+      goal.cheerings.build(user: current_user)
     end
 
     if @reward.save
