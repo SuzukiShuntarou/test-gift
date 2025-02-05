@@ -6,8 +6,8 @@ Rails.application.routes.draw do
   root to: redirect('/goals')
   resources :rewards, only: [:show, :new, :create, :edit, :update, :destroy]
   resources :goals, only: [:index, :edit, :update] do
-    resources :favorites, only: [:update]
-    resources :cheerings, only: [:update]
+    resources :favorites, only: [:create]
+    resources :cheerings, only: [:create]
   end
 
   if Rails.env.development?

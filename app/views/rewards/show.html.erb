@@ -22,10 +22,10 @@
   <div id="<%= dom_id(goal) %>">
     <%= render 'goals/goal', goal: goal %>
   </div>
-  <div id="<%= dom_id(favorite) %>">
+  <div id="favorite_<%= goal.id %>">
     <%= render 'favorites/favorite', goal: goal, favorite: favorite %>
   </div>
-  <div id="<%= dom_id(cheering) %>">
+  <div id="cheering_<%= goal.id %>">
     <%= render 'cheerings/cheering', goal: goal, cheering: cheering %>
   </div>
 <% end %>

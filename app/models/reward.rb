@@ -14,12 +14,6 @@ class Reward < ApplicationRecord
 
     # 初期目標の作成
     goals.create(user_id: current_user.id, content: '', progress: 0)
-    self.groups.each do |group|
-      self.goals.each do |goal|
-        goal.favorites.find_or_create_by(user_id: group.user_id).save
-        goal.cheerings.find_or_create_by(user_id: group.user_id).save
-      end
-    end
   end
 
   def in_progress?

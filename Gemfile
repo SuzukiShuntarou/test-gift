@@ -51,6 +51,7 @@ end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
+  gem 'bullet'
   gem 'letter_opener_web', '~> 3.0'
   gem 'rubocop', require: false
   gem 'rubocop-capybara', require: false
@@ -59,7 +60,6 @@ group :development do
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'web-console'
-  gem 'bullet'
 end
 
 group :test do

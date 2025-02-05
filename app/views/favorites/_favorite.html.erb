@@ -1,8 +1,8 @@
 <%= turbo_frame_tag favorite do %>
-  <%= button_to goal_favorite_path(id: favorite.id, goal_id: goal.id), class: "btn btn-link", method: :patch do %>
+  <%= button_to goal_favorites_path(goal_id: goal.id), class: "btn btn-link" do %>
     <span style="display: inline-flex;">
       <%= image_tag("good-icon.png", onmouseover: "this.title='#{show_liking_count(goal)}'",  size: '20x20') %>
-      <%= goal.favorites.sum(:good_count) %>
+      <%= goal.favorites.count %>
     </span>
   <% end %>
 <% end %>

@@ -2,16 +2,12 @@
 
 module CheeringsHelper
   def show_cheering_count(goal)
-    display = goal.cheerings.includes(:user).map do |cheering|
-      if cheering.cheering_count > 0
-        "#{cheering.user.name}さんが#{cheering.cheering_count}回"
-      end
-    end
+    user_names = goal.cheerings.includes(:user).pluck('users.name').uniq
 
-    if display.compact.empty?
-      "まだ静かな時間が流れているね。応援で流れを変えてみては？"
+    if user_names.empty?
+      'まだ静かな時間が流れているね。応援で流れを変えてみては？'
     else
-      "#{display.compact.join('、')}も応援しているよ！"
+      "#{user_names.join('と')}が応援しているよ！"
     end
   end
 end
