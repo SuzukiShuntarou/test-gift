@@ -2,7 +2,7 @@
   <%= button_to goal_favorites_path(goal_id: goal.id), class: "btn btn-link" do %>
     <span style="display: inline-flex;">
       <%= image_tag("good-icon.png", onmouseover: "this.title='#{show_liking_count(goal)}'",  size: '20x20') %>
-      <%= goal.favorites.count %>
+      <%= goal.favorites_count %>
     </span>
   <% end %>
 <% end %>

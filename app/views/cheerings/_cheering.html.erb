@@ -2,7 +2,7 @@
   <%= button_to goal_cheerings_path(goal_id: goal.id), class: "btn btn-link" do %>
     <span style="display: inline-flex;">
       <%= image_tag("cheering-icon.png", onmouseover: "this.title='#{show_cheering_count(goal)}'", size: '25x25') %>
-      <%= goal.cheerings.count %>
+      <%= goal.cheerings_count %>
     </span>
   <% end %>
 <% end %>
