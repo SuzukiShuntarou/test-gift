@@ -13,16 +13,7 @@ class Reward < ApplicationRecord
     users << current_user
 
     # 初期目標の作成
-    goal = goals.create(user_id: current_user.id, content: '', progress: 0)
-    goal.build_favorite.save
-    goal.build_cheering.save
-  end
-
-  def self.search_completed_or_in_progress(display, current_user)
-    rewards = Reward.includes(groups: :user, goals: %i[user favorite cheering])
-                    .where(groups: { user_id: current_user.id })
-                    .order(completiondate: :asc, id: :asc)
-    display == 'completed' ? rewards.where(completiondate: ...Date.current).reverse : rewards.where(completiondate: Date.current..)
+    goals.create(user_id: current_user.id, content: '', progress: 0)
   end
 
   def in_progress?

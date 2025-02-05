@@ -3,6 +3,10 @@
 class GoalsController < ApplicationController
   before_action :set_goal, only: %i[edit update]
 
+  def index
+    @goals = Goal.search_rewards_completed_or_in_progress(params[:display], current_user)
+  end
+
   def edit; end
 
   def update
@@ -20,6 +24,6 @@ class GoalsController < ApplicationController
   end
 
   def set_goal
-    @goal = current_user.goals.includes(:reward).find(params[:id])
+    @goal = current_user.goals.find(params[:id])
   end
 end

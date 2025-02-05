@@ -10,21 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_29_133455) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_05_013601) do
   create_table "cheerings", force: :cascade do |t|
     t.integer "goal_id", null: false
-    t.integer "cheering_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
     t.index ["goal_id"], name: "index_cheerings_on_goal_id"
+    t.index ["user_id"], name: "index_cheerings_on_user_id"
   end
 
   create_table "favorites", force: :cascade do |t|
     t.integer "goal_id", null: false
-    t.integer "good_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
     t.index ["goal_id"], name: "index_favorites_on_goal_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
   create_table "goals", force: :cascade do |t|
@@ -34,6 +36,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_29_133455) do
     t.integer "reward_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "favorites_count", default: 0
+    t.integer "cheerings_count", default: 0
     t.index ["reward_id"], name: "index_goals_on_reward_id"
     t.index ["user_id"], name: "index_goals_on_user_id"
   end
@@ -70,7 +74,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_29_133455) do
   end
 
   add_foreign_key "cheerings", "goals"
+  add_foreign_key "cheerings", "users"
   add_foreign_key "favorites", "goals"
+  add_foreign_key "favorites", "users"
   add_foreign_key "goals", "rewards"
   add_foreign_key "goals", "users"
   add_foreign_key "groups", "rewards"

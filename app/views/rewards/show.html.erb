@@ -17,13 +17,16 @@
 
 <br />目標<br />
 <% @goals.each do |goal| %>
+  <% favorite = goal.favorites.find_by(user: current_user) %>
+  <% cheering = goal.cheerings.find_by(user: current_user) %>
   <div id="<%= dom_id(goal) %>">
     <%= render 'goals/goal', goal: goal %>
   </div>
-  <div id="<%= dom_id(goal.favorite) %>">
-    <%= render 'favorites/favorite', favorite: goal.favorite %>
+  <div id="favorite_<%= goal.id %>">
+    <%= render 'favorites/favorite', goal: goal, favorite: favorite %>
   </div>
-  <div id="<%= dom_id(goal.cheering) %>">
-    <%= render 'cheerings/cheering', cheering: goal.cheering %>
+  <div id="cheering_<%= goal.id %>">
+    <%= render 'cheerings/cheering', goal: goal, cheering: cheering %>
   </div>
 <% end %>
+

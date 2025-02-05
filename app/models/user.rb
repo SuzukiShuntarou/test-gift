@@ -9,4 +9,6 @@ class User < ApplicationRecord
   has_many :groups, dependent: :destroy
   has_many :rewards, through: :groups
   has_many :goals, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :likings, dependent: :destroy
 end
